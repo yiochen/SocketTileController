@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>controller</title>
     <style>
+   
     
     #warning,#controller{
       display:none;
@@ -32,12 +33,32 @@
     }
     @media only screen and (orientation:landscape){
       #warning{display:none;}
-      #controller{display:block;}
      }
     </style>
   </head>
  
-  <body>   
+  <body> 
+    <h1>SocketTile Controller</h1>
+    <div class="widgets">
+      <div>
+        <span>ip</span>
+        <input type="text" id="ip">
+      </div>
+      <div>
+        <span>port</span>
+        <input type="text" id="port">
+      </div>
+    </div>  
+    
+    <div class="name">
+      <div class="name">
+        <span id="badgeName"></span>
+      </div>    
+    </div>
+    
+    <div>
+      <button id="connect">Connect</button>
+    </div>
     <div id="controller" class="center"></div>
     <div id="warning" class="center">
       Please turn your phone to landscape mode
