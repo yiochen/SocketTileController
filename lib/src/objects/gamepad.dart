@@ -5,7 +5,7 @@ class Gamepad extends Sprite{
   static const TOUCHED='touched';
   static const CHANGE_DIR='change dir';
   
-  num dir=null;
+  num dir=d_RIGHT;
   
   
   Pointer pointer;
@@ -60,12 +60,9 @@ class Gamepad extends Sprite{
       var newDir=sign(Math.abs(_x)-Math.abs(_y))*2+sign(_y-_x);
       if (newDir!=dir){
         print('old dir $dir and new dir $newDir');
-        if (dir!=null){
-          //if this is not a new touch,emit change direction event.
-          eventbus.add(CHANGE_DIR);
-        }//otherwise, it is a new touch, new touch event has already be broadcasted
-        dir=newDir;
         
+        dir=newDir;
+        eventbus.add(CHANGE_DIR);
       }
     }
   }

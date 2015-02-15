@@ -32,9 +32,9 @@ class c_PlayState extends State{
   void addGamePad() {
     gamepad=new Gamepad(game, 100, 200);
     game.add.existing(gamepad);
-    touchSub=gamepad.onEvent.where((val)=>val==Gamepad.TOUCHED).listen((val)=>print('touched'));
-    releaseSub=gamepad.onEvent.where((val)=>val==Gamepad.RELEASE).listen((val)=>print('release'));
-    changeSub=gamepad.onEvent.where((val)=>val==Gamepad.CHANGE_DIR).listen((val)=>print('new dir is ${gamepad.dir}'));
+    touchSub=gamepad.onEvent.where((val)=>val==Gamepad.TOUCHED).listen((val)=>ws.send(startMoveM(TAG)));
+    releaseSub=gamepad.onEvent.where((val)=>val==Gamepad.RELEASE).listen((val)=>ws.send(endMoveM(TAG)));
+    changeSub=gamepad.onEvent.where((val)=>val==Gamepad.CHANGE_DIR).listen((val)=>ws.send(newDirM(TAG,gamepad.dir)));
   }
   @override
   update(){
