@@ -1,5 +1,6 @@
 library player;
 import 'dart:html';
+import 'dart:convert';
 import 'package:play_phaser/phaser.dart';
 import 'package:SocketTile/common.dart';
 import 'dart:async';
@@ -11,16 +12,26 @@ Game game;
 String TAG='player';
 
 class Player{
-  
+  int id;
   Player(String server){
     ws=new WebSocket(server);
        ws..onOpen.listen(
            (Event e){
-             
-             ws.send(newConnM(TAG));
+             //don't sent anything yet, wait for the id assignment
+             //ws.send(newConnM(TAG));
            }
        )
-       ..onClose.listen((Event e){
+       ..onMessage.listen((MessageEvent e){
+         Map map=JSON.decode(e.data);
+         switch (map['message']){
+           case m_idAssign:
+             id=map[id];
+             //send the newConnM to inform game client of the new controller connection
+             ws.send(newConnM(TAG,id));
+             break;
+         }
+       })
+       ..onClose.listen((CloseEvent e){
          print('connection lost');
        });
        game=new Game(800,600,AUTO,'controller');
