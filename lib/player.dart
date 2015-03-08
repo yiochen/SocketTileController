@@ -10,7 +10,7 @@ part 'src/objects/gamepad.dart';
 WebSocket ws;
 Game game;
 String TAG='player';
-
+Player player;
 class Player{
   int id;
   Player(String server){
@@ -22,10 +22,10 @@ class Player{
            }
        )
        ..onMessage.listen((MessageEvent e){
-         Map map=JSON.decode(e.data);
-         switch (map['message']){
+         Map m=JSON.decode(e.data);
+         switch (m['message']){
            case m_idAssign:
-             id=map[id];
+             id=m[id];
              //send the newConnM to inform game client of the new controller connection
              ws.send(newConnM(TAG,id));
              break;
@@ -34,11 +34,11 @@ class Player{
        ..onClose.listen((CloseEvent e){
          print('connection lost');
        });
-       game=new Game(800,600,AUTO,'controller');
+       game=new Game(400,300,AUTO,'controller');
       //game=new Game(window.screen.available.width,window.screen.available.height,AUTO,'controller');
       
       game.state.add('play', new c_PlayState());
       game.state.start('play'); 
-      
+      player=this;
   }
 }

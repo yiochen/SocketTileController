@@ -16,12 +16,7 @@ class c_PlayState extends State{
 
     addGamePad();
     handleInput();
-//    game.input.addPointer();
-//    handleInput();
-//    document.onClick.listen((MouseEvent e){
-//          
-//          ws.send(clickM(TAG));
-//    });
+
   }
   
   void handleInput() {
@@ -30,11 +25,11 @@ class c_PlayState extends State{
   }
   
   void addGamePad() {
-    gamepad=new Gamepad(game, 100, 200);
+    gamepad=new Gamepad(game, 200,150);
     game.add.existing(gamepad);
-    touchSub=gamepad.onEvent.where((val)=>val==Gamepad.TOUCHED).listen((val)=>ws.send(startMoveM(TAG)));
-    releaseSub=gamepad.onEvent.where((val)=>val==Gamepad.RELEASE).listen((val)=>ws.send(endMoveM(TAG)));
-    changeSub=gamepad.onEvent.where((val)=>val==Gamepad.CHANGE_DIR).listen((val)=>ws.send(newDirM(TAG,gamepad.dir)));
+    touchSub=gamepad.onEvent.where((val)=>val==Gamepad.TOUCHED).listen((val)=>ws.send(startMoveM(TAG,player.id)));
+    releaseSub=gamepad.onEvent.where((val)=>val==Gamepad.RELEASE).listen((val)=>ws.send(endMoveM(TAG,player.id)));
+    changeSub=gamepad.onEvent.where((val)=>val==Gamepad.CHANGE_DIR).listen((val)=>ws.send(newDirM(TAG,gamepad.dir,player.id)));
   }
   @override
   update(){
